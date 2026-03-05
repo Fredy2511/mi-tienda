@@ -53,256 +53,327 @@ export default function Register() {
   };
 
   return (
-    <div style={styles.bg}>
-      {/* Panel izquierdo decorativo */}
-      <div style={styles.leftPanel}>
-        <div style={styles.brand}>
-          <div style={styles.brandIcon}>S</div>
-          <span style={styles.brandName}>ShopApp</span>
+    <>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .reg-bg {
+          min-height: 100vh;
+          display: flex;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a2a4a 100%);
+        }
+
+        /* PANEL IZQUIERDO */
+        .left-panel {
+          width: 40%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 3rem;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .brand {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 4rem;
+        }
+
+        .brand-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          background: linear-gradient(135deg, #e94560, #f5576c);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          font-weight: 800;
+          font-size: 1.2rem;
+          flex-shrink: 0;
+        }
+
+        .brand-name {
+          color: #fff;
+          font-weight: 700;
+          font-size: 1.2rem;
+        }
+
+        .left-title {
+          color: #fff;
+          font-size: clamp(1.8rem, 3vw, 2.8rem);
+          font-weight: 800;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+        }
+
+        .left-sub {
+          color: rgba(255,255,255,0.5);
+          font-size: 1rem;
+          line-height: 1.6;
+          max-width: 280px;
+        }
+
+        .circle {
+          position: absolute;
+          border-radius: 50%;
+          background: #fff;
+          pointer-events: none;
+        }
+
+        /* PANEL DERECHO */
+        .right-panel {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow-y: auto;
+          padding: 2rem 1.5rem;
+        }
+
+        .form-wrapper {
+          width: 100%;
+          max-width: 460px;
+        }
+
+        .reg-title {
+          color: #fff;
+          font-size: clamp(1.5rem, 4vw, 2rem);
+          font-weight: 800;
+          margin-bottom: 0.5rem;
+        }
+
+        .reg-subtitle {
+          color: rgba(255,255,255,0.6);
+          font-size: 0.95rem;
+          margin-bottom: 2rem;
+        }
+
+        .reg-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .field {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        .reg-label {
+          color: rgba(255,255,255,0.7);
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .reg-input {
+          background: rgba(255,255,255,0.1);
+          border: 1.5px solid rgba(255,255,255,0.2);
+          border-radius: 10px;
+          padding: 0.75rem 1rem;
+          color: #fff;
+          font-size: 0.95rem;
+          outline: none;
+          width: 100%;
+        }
+
+        .reg-input::placeholder {
+          color: rgba(255,255,255,0.3);
+        }
+
+        .reg-btn {
+          margin-top: 0.5rem;
+          background: linear-gradient(135deg, #e94560, #f5576c);
+          border: none;
+          border-radius: 12px;
+          padding: 0.95rem;
+          color: #fff;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 4px 20px rgba(233,69,96,0.35);
+          width: 100%;
+        }
+
+        .reg-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        .reg-error {
+          color: #e94560;
+          font-size: 0.85rem;
+          text-align: center;
+          background: rgba(233,69,96,0.08);
+          border-radius: 8px;
+          padding: 0.5rem;
+        }
+
+        .reg-footer {
+          text-align: center;
+          margin-top: 1.5rem;
+          color: rgba(255,255,255,0.5);
+          font-size: 0.9rem;
+        }
+
+        .reg-link {
+          color: #e94560;
+          text-decoration: none;
+          font-weight: 700;
+        }
+
+        /* TABLET */
+        @media (max-width: 768px) {
+          .left-panel {
+            display: none;
+          }
+
+          .right-panel {
+            padding: 2rem 1.25rem;
+          }
+        }
+
+        /* MÓVIL */
+        @media (max-width: 480px) {
+          .reg-bg {
+            min-height: 100vh;
+          }
+
+          .right-panel {
+            align-items: flex-start;
+            padding: 2rem 1rem;
+          }
+
+          .form-wrapper {
+            padding-top: 1rem;
+          }
+
+          .row {
+            grid-template-columns: 1fr;
+          }
+
+          .reg-title {
+            font-size: 1.6rem;
+          }
+        }
+      `}</style>
+
+      <div className="reg-bg">
+        {/* Panel izquierdo decorativo */}
+        <div className="left-panel">
+          <div className="brand">
+            <div className="brand-icon">S</div>
+            <span className="brand-name">ShopApp</span>
+          </div>
+          <h2 className="left-title">Tu tienda,<br />tu mundo.</h2>
+          <p className="left-sub">Registrate y empieza a explorar productos exclusivos.</p>
+          <div className="circle" style={{width:200,height:200,bottom:-60,left:-60,opacity:0.06}} />
+          <div className="circle" style={{width:120,height:120,top:40,right:-30,opacity:0.08}} />
         </div>
-        <h2 style={styles.leftTitle}>Tu tienda,<br />tu mundo.</h2>
-        <p style={styles.leftSub}>Registrate y empieza a explorar productos exclusivos.</p>
-        <div style={{...styles.circle, width:200, height:200, bottom:-60, left:-60, opacity:0.06}} />
-        <div style={{...styles.circle, width:120, height:120, top:40, right:-30, opacity:0.08}} />
-      </div>
 
-      {/* Panel derecho - formulario */}
-      <div style={styles.rightPanel}>
-        <div style={styles.formWrapper}>
-          <h1 style={styles.title}>Crear cuenta</h1>
-          <p style={styles.subtitle}>Completa tus datos para registrarte</p>
+        {/* Panel derecho - formulario */}
+        <div className="right-panel">
+          <div className="form-wrapper">
+            <h1 className="reg-title">Crear cuenta</h1>
+            <p className="reg-subtitle">Completa tus datos para registrarte</p>
 
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div style={styles.row}>
-              <div style={styles.field}>
-                <label style={styles.label}>Nombre</label>
+            <form onSubmit={handleSubmit} className="reg-form">
+              <div className="row">
+                <div className="field">
+                  <label className="reg-label">Nombre</label>
+                  <input
+                    name="name"
+                    placeholder="Fredy"
+                    onChange={handleChange}
+                    required
+                    className="reg-input"
+                  />
+                </div>
+                <div className="field">
+                  <label className="reg-label">Apellido Paterno</label>
+                  <input
+                    name="lastName"
+                    placeholder="Reynoso"
+                    onChange={handleChange}
+                    required
+                    className="reg-input"
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="reg-label">Apellido Materno</label>
                 <input
-                  name="name"
-                  placeholder="Fredy"
+                  name="lasrName"
+                  placeholder="Calvillo"
                   onChange={handleChange}
-                  required
-                  style={styles.input}
+                  className="reg-input"
                 />
               </div>
-              <div style={styles.field}>
-                <label style={styles.label}>Apellido Paterno</label>
+
+              <div className="field">
+                <label className="reg-label">Pais</label>
                 <input
-                  name="lastName"
-                  placeholder="Reynoso"
+                  name="country"
+                  placeholder="Mexico"
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="reg-input"
                 />
               </div>
-            </div>
 
-            <div style={styles.field}>
-              <label style={styles.label}>Apellido Materno</label>
-              <input
-                name="lasrName"
-                placeholder="Calvillo"
-                onChange={handleChange}
-                style={styles.input}
-              />
-            </div>
+              <div className="field">
+                <label className="reg-label">Correo electronico</label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="correo@ejemplo.com"
+                  onChange={handleChange}
+                  required
+                  className="reg-input"
+                />
+              </div>
 
-            <div style={styles.field}>
-              <label style={styles.label}>Pais</label>
-              <input
-                name="country"
-                placeholder="Mexico"
-                onChange={handleChange}
-                required
-                style={styles.input}
-              />
-            </div>
+              <div className="field">
+                <label className="reg-label">Contrasena</label>
+                <input
+                  name="password"
+                  type="password"
+                  placeholder="Minimo 6 caracteres"
+                  onChange={handleChange}
+                  required
+                  className="reg-input"
+                />
+              </div>
 
-            <div style={styles.field}>
-              <label style={styles.label}>Correo electronico</label>
-              <input
-                name="email"
-                type="email"
-                placeholder="correo@ejemplo.com"
-                onChange={handleChange}
-                required
-                style={styles.input}
-              />
-            </div>
+              {error && <p className="reg-error">{error}</p>}
 
-            <div style={styles.field}>
-              <label style={styles.label}>Contrasena</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="Minimo 6 caracteres"
-                onChange={handleChange}
-                required
-                style={styles.input}
-              />
-            </div>
+              <button type="submit" className="reg-btn" disabled={loading}>
+                {loading ? "Registrando..." : "Crear cuenta"}
+              </button>
+            </form>
 
-            {error && <p style={styles.error}>{error}</p>}
-
-            <button type="submit" style={styles.btn} disabled={loading}>
-              {loading ? "Registrando..." : "Crear cuenta"}
-            </button>
-          </form>
-
-          <p style={styles.footer}>
-            Ya tienes cuenta?{" "}
-            <Link to="/login" style={styles.link}>
-              Inicia sesion
-            </Link>
-          </p>
+            <p className="reg-footer">
+              Ya tienes cuenta?{" "}
+              <Link to="/login" className="reg-link">
+                Inicia sesion
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
-
-const styles = {
-bg: {
-    position: "fixed",
-    inset: 0,
-    display: "flex",
-    fontFamily: "'Segoe UI', sans-serif",
-    background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a2a4a 100%)",
-},
-leftPanel: {
-    width: "40%",
-    background: "transparent",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "3rem",
-    position: "relative",
-    overflow: "hidden",
-},
-  brand: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-    marginBottom: "4rem",
-  },
-  brandIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: "10px",
-    background: "linear-gradient(135deg, #e94560, #f5576c)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#fff",
-    fontWeight: "800",
-    fontSize: "1.2rem",
-  },
-  brandName: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: "1.2rem",
-  },
-  leftTitle: {
-    color: "#fff",
-    fontSize: "2.8rem",
-    fontWeight: "800",
-    lineHeight: 1.2,
-    marginBottom: "1.5rem",
-  },
-  leftSub: {
-    color: "rgba(255,255,255,0.5)",
-    fontSize: "1rem",
-    lineHeight: 1.6,
-    maxWidth: "280px",
-  },
-  circle: {
-    position: "absolute",
-    borderRadius: "50%",
-    background: "#fff",
-  },
-rightPanel: {
-    flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflowY: "auto",
-    padding: "2rem",
-    background: "transparent",
-},
-  formWrapper: {
-    width: "100%",
-    maxWidth: "460px",
-  },
-title: {
-    color: "#fff",
-    fontSize: "2rem",
-    fontWeight: "800",
-    margin: "0 0 0.5rem",
-},
-subtitle: {
-    color: "rgba(255,255,255,0.6)",
-    fontSize: "0.95rem",
-    marginBottom: "2rem",
-},
-label: {
-    color: "rgba(255,255,255,0.7)",
-    fontSize: "0.78rem",
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: "0.06em",
-},
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  row: {
-    display: "flex",
-    gap: "1rem",
-  },
-  field: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-    gap: "0.4rem",
-  },
-  btn: {
-    marginTop: "0.5rem",
-    background: "linear-gradient(135deg, #e94560, #f5576c)",
-    border: "none",
-    borderRadius: "12px",
-    padding: "0.95rem",
-    color: "#fff",
-    fontSize: "1rem",
-    fontWeight: "700",
-    cursor: "pointer",
-    boxShadow: "0 4px 20px rgba(233,69,96,0.35)",
-  },
-  error: {
-    color: "#e94560",
-    fontSize: "0.85rem",
-    textAlign: "center",
-    background: "rgba(233,69,96,0.08)",
-    borderRadius: "8px",
-    padding: "0.5rem",
-  },
-input: {
-    background: "rgba(255,255,255,0.1)",
-    border: "1.5px solid rgba(255,255,255,0.2)",
-    borderRadius: "10px",
-    padding: "0.75rem 1rem",
-    color: "#fff",
-    fontSize: "0.95rem",
-    outline: "none",
-},
-footer: {
-    textAlign: "center",
-    marginTop: "1.5rem",
-    color: "rgba(255,255,255,0.5)",
-    fontSize: "0.9rem",
-},
-  link: {
-    color: "#e94560",
-    textDecoration: "none",
-    fontWeight: "700",
-  },
-};
