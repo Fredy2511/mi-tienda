@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +37,6 @@ export default function Login() {
           background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
         }
 
-        /* PANEL IZQUIERDO */
         .login-left {
           width: 40%;
           display: flex;
@@ -96,7 +96,6 @@ export default function Login() {
           pointer-events: none;
         }
 
-        /* PANEL DERECHO */
         .login-right {
           flex: 1;
           display: flex;
@@ -155,9 +154,33 @@ export default function Login() {
           width: 100%;
         }
 
-        .login-input::placeholder {
-          color: rgba(255,255,255,0.3);
+        .login-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        /* OJITO */
+        .password-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
         }
+
+        .password-wrapper .login-input {
+          padding-right: 2.8rem;
+        }
+
+        .eye-btn {
+          position: absolute;
+          right: 0.85rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          color: rgba(255,255,255,0.4);
+          transition: color 0.2s;
+        }
+
+        .eye-btn:hover { color: rgba(255,255,255,0.8); }
 
         .login-btn {
           margin-top: 0.5rem;
@@ -173,10 +196,7 @@ export default function Login() {
           width: 100%;
         }
 
-        .login-btn:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
-        }
+        .login-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
         .login-error {
           color: #e94560;
@@ -194,42 +214,21 @@ export default function Login() {
           font-size: 0.9rem;
         }
 
-        .login-link {
-          color: #e94560;
-          text-decoration: none;
-          font-weight: 700;
-        }
+        .login-link { color: #e94560; text-decoration: none; font-weight: 700; }
 
-        /* TABLET */
         @media (max-width: 768px) {
-          .login-left {
-            display: none;
-          }
-
-          .login-right {
-            padding: 2rem 1.25rem;
-          }
+          .login-left { display: none; }
+          .login-right { padding: 2rem 1.25rem; }
         }
 
-        /* MÓVIL */
         @media (max-width: 480px) {
-          .login-right {
-            align-items: flex-start;
-            padding: 2.5rem 1rem;
-          }
-
-          .login-form-wrapper {
-            padding-top: 1rem;
-          }
-
-          .login-title {
-            font-size: 1.6rem;
-          }
+          .login-right { align-items: flex-start; padding: 2.5rem 1rem; }
+          .login-form-wrapper { padding-top: 1rem; }
+          .login-title { font-size: 1.6rem; }
         }
       `}</style>
 
       <div className="login-bg">
-        {/* Panel izquierdo */}
         <div className="login-left">
           <div className="login-brand">
             <div className="login-brand-icon">S</div>
@@ -241,7 +240,6 @@ export default function Login() {
           <div className="login-circle" style={{width:120,height:120,top:40,right:-30,opacity:0.08}} />
         </div>
 
-        {/* Panel derecho */}
         <div className="login-right">
           <div className="login-form-wrapper">
             <h1 className="login-title">Iniciar sesion</h1>
@@ -261,13 +259,36 @@ export default function Login() {
 
               <div className="login-field">
                 <label className="login-label">Contrasena</label>
-                <input
-                  type="password"
-                  placeholder="Minimo 6 caracteres"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="login-input"
-                />
+                <div className="password-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Minimo 6 caracteres"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="login-input"
+                  />
+                  <button
+                    type="button"
+                    className="eye-btn"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showPassword ? (
+                      // Ojo cerrado
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                      </svg>
+                    ) : (
+                      // Ojo abierto
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               {error && <p className="login-error">{error}</p>}
@@ -279,9 +300,7 @@ export default function Login() {
 
             <p className="login-footer">
               No tienes cuenta?{" "}
-              <Link to="/" className="login-link">
-                Registrate
-              </Link>
+              <Link to="/" className="login-link">Registrate</Link>
             </p>
           </div>
         </div>

@@ -13,6 +13,7 @@ export default function Register() {
     password: "",
     country: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -32,15 +33,14 @@ export default function Register() {
       );
       const uid = userCredential.user.uid;
 
+      // ✅ Solo guardamos datos del perfil, NUNCA la contraseña
       await setDoc(doc(db, "Users", uid), {
         name: form.name,
         lastName: form.lastName,
         lasrName: form.lasrName,
         email: form.email,
-        password: form.password,
         country: form.country,
         uid: uid,
-        uuid: uid,
         createdAt: serverTimestamp(),
       });
 
@@ -64,7 +64,6 @@ export default function Register() {
           background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a2a4a 100%);
         }
 
-        /* PANEL IZQUIERDO */
         .left-panel {
           width: 40%;
           display: flex;
@@ -96,11 +95,7 @@ export default function Register() {
           flex-shrink: 0;
         }
 
-        .brand-name {
-          color: #fff;
-          font-weight: 700;
-          font-size: 1.2rem;
-        }
+        .brand-name { color: #fff; font-weight: 700; font-size: 1.2rem; }
 
         .left-title {
           color: #fff;
@@ -124,7 +119,6 @@ export default function Register() {
           pointer-events: none;
         }
 
-        /* PANEL DERECHO */
         .right-panel {
           flex: 1;
           display: flex;
@@ -134,10 +128,7 @@ export default function Register() {
           padding: 2rem 1.5rem;
         }
 
-        .form-wrapper {
-          width: 100%;
-          max-width: 460px;
-        }
+        .form-wrapper { width: 100%; max-width: 460px; }
 
         .reg-title {
           color: #fff;
@@ -152,23 +143,11 @@ export default function Register() {
           margin-bottom: 2rem;
         }
 
-        .reg-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
+        .reg-form { display: flex; flex-direction: column; gap: 1rem; }
 
-        .row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-        .field {
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-        }
+        .field { display: flex; flex-direction: column; gap: 0.4rem; }
 
         .reg-label {
           color: rgba(255,255,255,0.7);
@@ -189,9 +168,33 @@ export default function Register() {
           width: 100%;
         }
 
-        .reg-input::placeholder {
-          color: rgba(255,255,255,0.3);
+        .reg-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        /* OJITO */
+        .password-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
         }
+
+        .password-wrapper .reg-input {
+          padding-right: 2.8rem;
+        }
+
+        .eye-btn {
+          position: absolute;
+          right: 0.85rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          color: rgba(255,255,255,0.4);
+          transition: color 0.2s;
+        }
+
+        .eye-btn:hover { color: rgba(255,255,255,0.8); }
 
         .reg-btn {
           margin-top: 0.5rem;
@@ -207,10 +210,7 @@ export default function Register() {
           width: 100%;
         }
 
-        .reg-btn:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
-        }
+        .reg-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
         .reg-error {
           color: #e94560;
@@ -228,50 +228,22 @@ export default function Register() {
           font-size: 0.9rem;
         }
 
-        .reg-link {
-          color: #e94560;
-          text-decoration: none;
-          font-weight: 700;
-        }
+        .reg-link { color: #e94560; text-decoration: none; font-weight: 700; }
 
-        /* TABLET */
         @media (max-width: 768px) {
-          .left-panel {
-            display: none;
-          }
-
-          .right-panel {
-            padding: 2rem 1.25rem;
-          }
+          .left-panel { display: none; }
+          .right-panel { padding: 2rem 1.25rem; }
         }
 
-        /* MÓVIL */
         @media (max-width: 480px) {
-          .reg-bg {
-            min-height: 100vh;
-          }
-
-          .right-panel {
-            align-items: flex-start;
-            padding: 2rem 1rem;
-          }
-
-          .form-wrapper {
-            padding-top: 1rem;
-          }
-
-          .row {
-            grid-template-columns: 1fr;
-          }
-
-          .reg-title {
-            font-size: 1.6rem;
-          }
+          .right-panel { align-items: flex-start; padding: 2rem 1rem; }
+          .form-wrapper { padding-top: 1rem; }
+          .row { grid-template-columns: 1fr; }
+          .reg-title { font-size: 1.6rem; }
         }
       `}</style>
 
       <div className="reg-bg">
-        {/* Panel izquierdo decorativo */}
         <div className="left-panel">
           <div className="brand">
             <div className="brand-icon">S</div>
@@ -283,7 +255,6 @@ export default function Register() {
           <div className="circle" style={{width:120,height:120,top:40,right:-30,opacity:0.08}} />
         </div>
 
-        {/* Panel derecho - formulario */}
         <div className="right-panel">
           <div className="form-wrapper">
             <h1 className="reg-title">Crear cuenta</h1>
@@ -293,69 +264,60 @@ export default function Register() {
               <div className="row">
                 <div className="field">
                   <label className="reg-label">Nombre</label>
-                  <input
-                    name="name"
-                    placeholder="Fredy"
-                    onChange={handleChange}
-                    required
-                    className="reg-input"
-                  />
+                  <input name="name" placeholder="Fredy" onChange={handleChange} required className="reg-input" />
                 </div>
                 <div className="field">
                   <label className="reg-label">Apellido Paterno</label>
-                  <input
-                    name="lastName"
-                    placeholder="Reynoso"
-                    onChange={handleChange}
-                    required
-                    className="reg-input"
-                  />
+                  <input name="lastName" placeholder="Reynoso" onChange={handleChange} required className="reg-input" />
                 </div>
               </div>
 
               <div className="field">
                 <label className="reg-label">Apellido Materno</label>
-                <input
-                  name="lasrName"
-                  placeholder="Calvillo"
-                  onChange={handleChange}
-                  className="reg-input"
-                />
+                <input name="lasrName" placeholder="Calvillo" onChange={handleChange} className="reg-input" />
               </div>
 
               <div className="field">
                 <label className="reg-label">Pais</label>
-                <input
-                  name="country"
-                  placeholder="Mexico"
-                  onChange={handleChange}
-                  required
-                  className="reg-input"
-                />
+                <input name="country" placeholder="Mexico" onChange={handleChange} required className="reg-input" />
               </div>
 
               <div className="field">
                 <label className="reg-label">Correo electronico</label>
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="correo@ejemplo.com"
-                  onChange={handleChange}
-                  required
-                  className="reg-input"
-                />
+                <input name="email" type="email" placeholder="correo@ejemplo.com" onChange={handleChange} required className="reg-input" />
               </div>
 
               <div className="field">
                 <label className="reg-label">Contrasena</label>
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Minimo 6 caracteres"
-                  onChange={handleChange}
-                  required
-                  className="reg-input"
-                />
+                <div className="password-wrapper">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Minimo 6 caracteres"
+                    onChange={handleChange}
+                    required
+                    className="reg-input"
+                  />
+                  <button
+                    type="button"
+                    className="eye-btn"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showPassword ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               {error && <p className="reg-error">{error}</p>}
@@ -367,9 +329,7 @@ export default function Register() {
 
             <p className="reg-footer">
               Ya tienes cuenta?{" "}
-              <Link to="/login" className="reg-link">
-                Inicia sesion
-              </Link>
+              <Link to="/login" className="reg-link">Inicia sesion</Link>
             </p>
           </div>
         </div>
